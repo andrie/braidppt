@@ -1,0 +1,22 @@
+Package: braidppt
+Maintainer: Andrie de Vries <apdevries@gmail.com>
+License: GPL (>=2)
+Title: An extension of braid to deal with PowerPoint output
+LazyData: true
+LazyLoad: true
+Author: Andrie de Vries <apdevries@gmail.com>
+Description: This extends the braid package to create
+    PowerPoint slides from R.
+Author@R: person("Andrie", "de Vries",
+    email="apdevries@gmail.com")
+Version: 0.0-01
+URL: https://github.com/pentalibra/braidppt
+Date: 2011-11-02
+Depends:
+    R2PPT,
+    braid
+Collate:
+    'braidPPT-package.R'
+    'ppt.R'
+    'braid-ppt.R'
+    'code-generation.R'
