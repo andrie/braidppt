@@ -20,6 +20,7 @@ test_that("Creating braidppt file is possible", {
       
       braidpptNew(b)
       braidpptNewSlide(b, title="This is the title", text="And this is the text")
+      braidpptInsertImage(b, file="sinewave.png")
       braidpptSave(b, resultFile)
       braidpptClose(b)
       
@@ -31,6 +32,7 @@ test_that("Creating braidppt file is possible", {
       rest <- c(
           "ppt <- pptNew()", 
           "ppt <- pptNewSlide(ppt, title=\"This is the title\", text=\"And this is the text\")",
+          "ppt <- pptInsertImage(ppt, file=\"sinewave.png\")",
           "PPT.SaveAs(ppt, \"braidPPT.ppt\")",
           "PPT.Close(ppt)"
       )
@@ -56,3 +58,5 @@ test_that("Compiling braidppt creates a ppt file", {
       expect_true(file.exists(resultFile))
       
     })
+
+

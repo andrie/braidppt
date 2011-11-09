@@ -1,6 +1,6 @@
 \name{braidpptNewSlide}
 \alias{braidpptNewSlide}
-\title{Adds new slide to braidppt.}
+\title{Adds new slide.}
 \usage{
   braidpptNewSlide(braid, title = NULL, text = NULL,
   subtitle = NULL, file = NULL, size = NULL)
@@ -19,9 +19,11 @@
   \item{braid}{Braid object}
 }
 \description{
-  Adds new slide to braidppt.
+  Adds new slide.
 }
 \seealso{
-  Other braidPPT: \code{\link{braidpptNew}}
+  Other braidPPT: \code{\link{braidpptClose}},
+  \code{\link{braidpptInsertImage}},
+  \code{\link{braidpptNew}}, \code{\link{braidpptSave}}
 }
 

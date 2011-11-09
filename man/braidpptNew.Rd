@@ -14,6 +14,9 @@
   Initialises braidppt.
 }
 \seealso{
-  Other braidPPT: \code{\link{braidpptNewSlide}}
+  Other braidPPT: \code{\link{braidpptClose}},
+  \code{\link{braidpptInsertImage}},
+  \code{\link{braidpptNewSlide}},
+  \code{\link{braidpptSave}}
 }
 

@@ -1,4 +1,5 @@
 ppt <- pptNew()
 ppt <- pptNewSlide(ppt, title="This is the title", text="And this is the text")
+ppt <- pptInsertImage(ppt, file="sinewave.png")
 PPT.SaveAs(ppt, "braidPPT.ppt")
 PPT.Close(ppt)

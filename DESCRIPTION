@@ -9,9 +9,9 @@ Description: This extends the braid package to create
     PowerPoint slides from R.
 Author@R: person("Andrie", "de Vries",
     email="apdevries@gmail.com")
-Version: 0.0-01
+Version: 0.0-02
 URL: https://github.com/pentalibra/braidppt
-Date: 2011-11-02
+Date: 2011-11-08
 Depends:
     R2PPT,
     braid

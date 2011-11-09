@@ -35,10 +35,22 @@ braidpptNewSlide <- function(braid, title=NULL, text=NULL, subtitle=NULL, file=N
   invisible(NULL)
 }
 
+#' Inserts image on slide.
+#' 
+#' @inheritParams braidpptNewSlide
+#' @family braidPPT
+#' @export 
+braidpptInsertImage <- function(braid, file=NULL, size=NULL){
+  text <- paste("ppt <- pptInsertImage(ppt", .cqarg("file", file), .cqarg("size", size), ")", sep="")
+  braid::braidWrite(braid, text)
+  invisible(NULL)
+}
+
+
 #' Saves ppt.
 #' 
 #' @inheritParams braidpptNew
-#' @filename
+#' @param filename Character string: Name of file to save.
 #' @family braidPPT
 #' @export 
 braidpptSave <- function(braid, filename){
@@ -50,7 +62,6 @@ braidpptSave <- function(braid, filename){
 #' Closes ppt.
 #' 
 #' @inheritParams braidpptNew
-#' @filename
 #' @family braidPPT
 #' @export 
 braidpptClose <- function(braid){
@@ -71,3 +82,4 @@ braidpptClose <- function(braid){
 braidCompilePPT <- function(b=NULL, fileOuter=b$fileInner, ...){
   source(fileOuter)
 }
+

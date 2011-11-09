@@ -54,10 +54,10 @@ test_that("pptNew creates new ppt using RDCOMClient", {
     })
 
 
-test_that("newSlide adds slides", {
+test_that("pptNewSlide adds slides", {
       
       ppt <- pptNew()
-
+      
       ppt <- pptNewSlide(ppt) # This should be blank
       ppt <- pptNewSlide(ppt, "Title", subtitle="Subtitle")
       ppt <- pptNewSlide(ppt, "Title only")
@@ -71,7 +71,29 @@ test_that("newSlide adds slides", {
       pptClose(ppt)
     
     })
+
+test_that("pptInsertImage inserts image", {
       
+      # Create plot file
+      png("sinewave.png")
+      plot(sin, -pi, 2*pi)
+      dev.off()
+      
+      ppt <- pptNew()
+      
+      ppt <- pptNewSlide(ppt, "Slide with graphic", subtitle="Test of slide with graphic")
+      ppt <- pptInsertImage(ppt, file="sinewave.png")
+      
+      expect_is(ppt, "list")
+      expect_equal(ppt$method, "RDCOMClient")
+      expect_is(ppt$ppt, "COMIDispatch")
+      expect_is(ppt$pres, "COMIDispatch")
+      
+      pptClose(ppt)
+      
+    })
+
+
 context("Save ppt")
 
 test_that("ppt is created and saved",{
@@ -85,6 +107,7 @@ test_that("ppt is created and saved",{
       ppt <- pptNewSlide(ppt, "Title", subtitle="Subtitle")
       ppt <- pptNewSlide(ppt, "Title only slide")
       ppt <- pptNewSlide(ppt, "Title with text", "Some text\rSome more text\rEven more text")
+      ppt <- pptNewSlide(ppt, "Slide with graphic", file="sinewave.png")
       ppt <- pptSave(ppt, testFile)
       ppt <- pptClose(ppt)
       
