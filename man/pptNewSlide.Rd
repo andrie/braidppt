@@ -34,7 +34,7 @@ ppt <- pptNew()
 ppt <- pptNewSlide(ppt) # This should be blank
 ppt <- pptNewSlide(ppt, "Title", subtitle="Subtitle")
 ppt <- pptNewSlide(ppt, "Title only")
-ppt <- pptNewSlide(ppt, "Title with text", "Some text\\nSome more text\\nEven more text")
+ppt <- pptNewSlide(ppt, "Title with text", "Level1\\n\\tLevel 2 item 1\\n\\tLevel 2 item 2\\n\\t\\tLevel 3\\nBack to level 1")
 rm(ppt)
 }
 }

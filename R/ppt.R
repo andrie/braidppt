@@ -53,6 +53,28 @@ msTemplatePath <- function(file, path=NULL){
 }
 
 
+#' Determines indentation level of text, based on tab characters (\\t) at start of line.
+#'
+#' Splits the input text at paragraph boundaries (determined by \\t or \\n), counts the number of leading tabs in each paragraph, removes the tab stops, and returns text with \\r as collapsed string.
+#'
+#' @param text Character string, with paragraph breaks indicated by \\r or \\n
+#' @param sep Character Separator to indicated paragraph breaks.  Defaults to \\r, the PowerPoint standard
+#' @return a list consisting of two elements: text and levels
+#' @keywords internal
+tabIndentLevels <- function(text, sep="\r"){
+  text <- strsplit(text, "[\n\r]")[[1]]
+  levels <- sapply(
+      text, 
+      function(zz)which(strsplit(zz[1], "")[[1]] != "\t")[1], 
+      USE.NAMES=FALSE)
+  
+  list(
+      text = paste(substring(text, levels), collapse=sep),
+      levels = levels
+  )
+}
+
+
 
 #' Create new PowerPoint slide and applies template.
 #'
@@ -116,7 +138,7 @@ pptClose <- function(ppt){
 #'   ppt <- pptNewSlide(ppt) # This should be blank
 #'   ppt <- pptNewSlide(ppt, "Title", subtitle="Subtitle")
 #'   ppt <- pptNewSlide(ppt, "Title only")
-#'   ppt <- pptNewSlide(ppt, "Title with text", "Some text\nSome more text\nEven more text")
+#'   ppt <- pptNewSlide(ppt, "Title with text", "Level1\n\tLevel 2 item 1\n\tLevel 2 item 2\n\t\tLevel 3\nBack to level 1")
 #'   rm(ppt)
 #' }
 #' @export
@@ -145,7 +167,14 @@ pptNewSlide <- function(ppt, title=NULL, text=NULL, subtitle=NULL, file=NULL,
       } else {
   
         if(sldText){
-          ppt <- PPT.AddTextSlide(ppt, title=title, text=text)
+          # Creates text slide, then modify indent levels
+          tl <- tabIndentLevels(text)
+          ppt <- PPT.AddTextSlide(ppt, title=title, text=tl$text)
+          for (i in seq_along(tl$levels)){
+            tmp <- ppt$Current.Slide[["Shapes"]]$Item(2)[["TextFrame"]][["TextRange"]]$Paragraphs(i)
+            tmp[["IndentLevel"]] <- as.numeric(tl$levels[i])
+          }
+
         }
       }
     }
@@ -222,6 +251,58 @@ pptInsertImage <- function (ppt, file = NULL, size=c(0.1, 0.1, 0.9, 0.9))
   }
   return(invisible(ppt))
 }
+
+
+#' Insert textbox on current slide.
+#' 
+#' @inheritParams pptNewSlide
+#' @param position Numeric vector of length 4 indicating c(top, left, width, height)
+#' @param fontControl List of Properties and values that controls the font.  Passed to \code{ppt.Current.Slide.Shapes.Item(n).TextFrame.Tex}
+pptInsertTextbox <- function(
+    ppt, 
+    text, 
+    position=c(100, 100, 150, 50), 
+    fontControl=list(Color=1, Bold=FALSE, Italic=FALSE, Underline=FALSE),
+    paraControl = list(Alignment=2)
+){
+  
+  p <- position
+  
+  tb <- ppt$Current.Slide[["Shapes"]]$AddTextbox(1, p[1], p[2], p[3], p[4])
+  #tb <- ppt$Current.Slide[["Shapes"]]$Item(1)[["TextFrame"]][["TextRange"]]
+  #browser()
+  tb <- tb[["TextFrame"]][["TextRange"]]
+  tb[["Text"]] <- text
+  font <- tb[["Font"]]
+  
+#  browser()
+  for(i in seq_along(fontControl)){
+    res <- tryCatch(
+        font[[names(fontControl[i])]] <- unname(fontControl[[i]]),
+        error = function(e) e
+    )
+    if(inherits(res, "error")){
+      msg <- paste("Unable to set property", names(fontControl[i]), "of Font")
+      warning(msg)
+    } 
+    
+  }
+  
+  par <- tb[["ParagraphFormat"]]
+  for(i in seq_along(paraControl)){
+    tryCatch(
+        par[[names(paraControl[i])]] <- unname(paraControl[[i]]),
+        error = function(e) e
+    )
+    if(inherits(res, "error")){
+      msg <- paste("Unable to set property", names(fontControl[i]), "of ParagraphFormat")
+      warning(msg)
+    }
+  }
+  
+  tb
+}
+
 
 
 
