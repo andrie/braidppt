@@ -3,7 +3,7 @@
 \title{Adds new slide.}
 \usage{
   braidpptNewSlide(braid, title = NULL, text = NULL,
-  subtitle = NULL, file = NULL, size = NULL)
+  subtitle = NULL, filename = NULL, size = NULL)
 }
 \arguments{
   \item{title}{Slide title}
@@ -12,7 +12,7 @@
 
   \item{subtitle}{Slide subtitle}
 
-  \item{file}{Filename of image to attach}
+  \item{filename}{Filename of image to attach}
 
   \item{size}{Size of image}
 
@@ -24,6 +24,7 @@
 \seealso{
   Other braidPPT: \code{\link{braidpptClose}},
   \code{\link{braidpptInsertImage}},
-  \code{\link{braidpptNew}}, \code{\link{braidpptSave}}
+  \code{\link{braidpptNew}}, \code{\link{braidpptPlot}},
+  \code{\link{braidpptSave}}
 }
 

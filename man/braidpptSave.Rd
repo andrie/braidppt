@@ -15,6 +15,8 @@
 \seealso{
   Other braidPPT: \code{\link{braidpptClose}},
   \code{\link{braidpptInsertImage}},
-  \code{\link{braidpptNew}}, \code{\link{braidpptNewSlide}}
+  \code{\link{braidpptNew}},
+  \code{\link{braidpptNewSlide}},
+  \code{\link{braidpptPlot}}
 }
 

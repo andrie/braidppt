@@ -23,14 +23,14 @@ braidpptNew <- function(braid, template=NULL){
 #' @param title Slide title
 #' @param text Slide text
 #' @param subtitle Slide subtitle
-#' @param file Filename of image to attach
+#' @param filename Filename of image to attach
 #' @param size Size of image
 #' @family braidPPT
 #' @export 
-braidpptNewSlide <- function(braid, title=NULL, text=NULL, subtitle=NULL, file=NULL, 
+braidpptNewSlide <- function(braid, title=NULL, text=NULL, subtitle=NULL, filename=NULL, 
     size=NULL){
   text <- paste("ppt <- pptNewSlide(ppt", .cqarg("title", title), .cqarg("text", text),
-      .cqarg("subtitle", subtitle), .cqarg("file", file), .cqarg("size", size), ")", sep="")
+      .cqarg("subtitle", subtitle), .cqarg("file", filename), .cqarg("size", size), ")", sep="")
   braid::braidWrite(braid, text)
   invisible(NULL)
 }
@@ -40,9 +40,30 @@ braidpptNewSlide <- function(braid, title=NULL, text=NULL, subtitle=NULL, file=N
 #' @inheritParams braidpptNewSlide
 #' @family braidPPT
 #' @export 
-braidpptInsertImage <- function(braid, file=NULL, size=NULL){
-  text <- paste("ppt <- pptInsertImage(ppt", .cqarg("file", file), .cqarg("size", size), ")", sep="")
+braidpptInsertImage <- function(braid, filename=NULL, size=NULL){
+  text <- paste("ppt <- pptInsertImage(ppt", .cqarg("file", filename), .cqarg("size", size), ")", sep="")
   braid::braidWrite(braid, text)
+  invisible(NULL)
+}
+
+
+
+
+#' Inserts image on slide.
+#' 
+#' @inheritParams braidpptNewSlide
+#' @param plotcode A plot object (either ggplot or lattice)
+#' @family braidPPT
+#' @export 
+braidpptPlot <- function(braid, plotcode, filename=braidFilename(braid), 
+    width=braid$defaultPlotSize[1], 
+    height=braid$defaultPlotSize[2], Qid=NA){
+  
+  fullFilename <- file.path(braid$pathGraphics, filename)
+  if(grepl("pdf$", fullFilename)) stop("Unable to insert pdf images into PowerPoint")
+  
+  braidpptInsertImage(braid, filename=fullFilename, size=NULL)
+  braid:::braidAppendPlot(braid, plotcode, filename, width, height, Qid)
   invisible(NULL)
 }
 

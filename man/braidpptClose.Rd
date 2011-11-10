@@ -14,6 +14,6 @@
   Other braidPPT: \code{\link{braidpptInsertImage}},
   \code{\link{braidpptNew}},
   \code{\link{braidpptNewSlide}},
-  \code{\link{braidpptSave}}
+  \code{\link{braidpptPlot}}, \code{\link{braidpptSave}}
 }
 
