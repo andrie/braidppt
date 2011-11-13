@@ -53,6 +53,9 @@ braidpptInsertImage <- function(braid, filename=NULL, size=NULL){
 #' 
 #' @inheritParams braidpptNewSlide
 #' @param plotcode A plot object (either ggplot or lattice)
+#' @param width Numeric: width of plot in inches
+#' @param height Numeric: height of plot in inches
+#' @param Qid Question ID
 #' @family braidPPT
 #' @export 
 braidpptPlot <- function(braid, plotcode, filename=braidFilename(braid), 

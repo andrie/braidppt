@@ -1,6 +1,6 @@
 \name{pptNew}
 \alias{pptNew}
-\title{Create new PowerPoint slide and applies template.}
+\title{Create new PowerPoint presentation and applies template.}
 \usage{
   pptNew(template = "PentaLibra.potx", method =
   "RDCOMClient")
@@ -19,7 +19,7 @@
   A pointer to a ppt object
 }
 \description{
-  Create new PowerPoint slide and applies template.
+  Create new PowerPoint presentation and applies template.
 }
 \examples{
 if(isCOMsupported(method="RDCOMClient")){
@@ -28,6 +28,7 @@ ppt <- pptNew()
 }
 \seealso{
   Other PowerPoint: \code{\link{pptClose}},
-  \code{\link{pptNewSlide}}, \code{\link{pptSave}}
+  \code{\link{pptNewSlide}}, \code{\link{pptOpen}},
+  \code{\link{pptSave}}
 }
 

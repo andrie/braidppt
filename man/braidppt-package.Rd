@@ -1,8 +1,8 @@
 \docType{package}
-\name{package-braidppt}
-\alias{"package-braidppt"}
+\name{braidppt-package}
+\alias{"braidppt-package"}
 \alias{braidppt}
-\alias{package-braidppt}
+\alias{braidppt-package}
 \title{Extension to braid that deals with PowerPoint output}
 \description{
   An extension to the braid report writing system that

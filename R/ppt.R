@@ -76,7 +76,7 @@ tabIndentLevels <- function(text, sep="\r"){
 
 
 
-#' Create new PowerPoint slide and applies template.
+#' Create new PowerPoint presentation and applies template.
 #'
 #' @param template Character string: File location and template name.  If not a full file path, searches for the file in the default path for Microsoft templates.  See \code{\link{msTemplatePath}} for details
 #' @inheritParams isCOMsupported
@@ -92,6 +92,20 @@ pptNew <- function(template="PentaLibra.potx", method="RDCOMClient"){
   stopIfNoCOM(method=method)
   ppt <- PPT.Init(method=method) 
   ppt <- PPT.ApplyTemplate(ppt, file=template)
+  return(invisible(ppt))
+}
+
+#' Opens existing PowerPoint presentations.
+#'
+#' @inheritParams pptNew
+#' @inheritParams isCOMsupported
+#' @param file Character string: Name of a file
+#' @return A pointer to a ppt object
+#' @family PowerPoint
+#' @export
+pptOpen <- function(file, method="RDCOMClient"){
+  if(!file.exists(file)) stop("In pptOpen file does not exist")
+  ppt <- PPT.Open(file=file, method=method) 
   return(invisible(ppt))
 }
 
@@ -258,6 +272,7 @@ pptInsertImage <- function (ppt, file = NULL, size=c(0.1, 0.1, 0.9, 0.9))
 #' @inheritParams pptNewSlide
 #' @param position Numeric vector of length 4 indicating c(top, left, width, height)
 #' @param fontControl List of Properties and values that controls the font.  Passed to \code{ppt.Current.Slide.Shapes.Item(n).TextFrame.Tex}
+#' @param paraControl List of Properties and values that controls ParagraphFormat.  The alignment property takes integer values (e.g. 1=left, 2=centre, 3=right).
 pptInsertTextbox <- function(
     ppt, 
     text, 

@@ -40,6 +40,7 @@ rm(ppt)
 }
 \seealso{
   Other PowerPoint: \code{\link{pptClose}},
-  \code{\link{pptNew}}, \code{\link{pptSave}}
+  \code{\link{pptNew}}, \code{\link{pptOpen}},
+  \code{\link{pptSave}}
 }
 

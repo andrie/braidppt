@@ -22,8 +22,8 @@
 #' }
 #' 
 #' 
-#' @name package-braidppt
-#' @aliases braidppt package-braidppt
+#' @name braidppt-package
+#' @aliases braidppt braidppt-package
 #' @docType package
 #' @title Extension to braid that deals with PowerPoint output
 #' @author Andrie de Vries \email{andrie.de.vries@@pentalibra.com}

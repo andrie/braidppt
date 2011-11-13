@@ -13,6 +13,7 @@
 }
 \seealso{
   Other PowerPoint: \code{\link{pptNew}},
-  \code{\link{pptNewSlide}}, \code{\link{pptSave}}
+  \code{\link{pptNewSlide}}, \code{\link{pptOpen}},
+  \code{\link{pptSave}}
 }
 

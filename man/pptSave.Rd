@@ -15,6 +15,7 @@
 }
 \seealso{
   Other PowerPoint: \code{\link{pptClose}},
-  \code{\link{pptNew}}, \code{\link{pptNewSlide}}
+  \code{\link{pptNew}}, \code{\link{pptNewSlide}},
+  \code{\link{pptOpen}}
 }
 
