@@ -3,7 +3,7 @@
 \title{Adds new slide.}
 \usage{
   braidpptNewSlide(braid, title = NULL, text = NULL,
-  subtitle = NULL, filename = NULL, size = NULL)
+    subtitle = NULL, filename = NULL, size = NULL)
 }
 \arguments{
   \item{title}{Slide title}

@@ -2,10 +2,10 @@
 \alias{pptInsertTextbox}
 \title{Insert textbox on current slide.}
 \usage{
-  pptInsertTextbox(ppt, text, position = c(100, 100, 150,
-  50), fontControl = list(Color = 1, Bold = FALSE, Italic =
-  FALSE, Underline = FALSE), paraControl = list(Alignment =
-  2))
+  pptInsertTextbox(ppt, text,
+    position = c(100, 100, 150, 50),
+    fontControl = list(Color = 1, Bold = FALSE, Italic = FALSE, Underline = FALSE),
+    paraControl = list(Alignment = 2))
 }
 \arguments{
   \item{position}{Numeric vector of length 4 indicating

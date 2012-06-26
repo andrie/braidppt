@@ -1,6 +1,5 @@
 \docType{package}
 \name{braidppt-package}
-\alias{"braidppt-package"}
 \alias{braidppt}
 \alias{braidppt-package}
 \title{Extension to braid that deals with PowerPoint output}

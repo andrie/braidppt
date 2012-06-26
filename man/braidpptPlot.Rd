@@ -2,9 +2,10 @@
 \alias{braidpptPlot}
 \title{Inserts image on slide.}
 \usage{
-  braidpptPlot(braid, plotcode, filename =
-  braidFilename(braid), width = braid$defaultPlotSize[1],
-  height = braid$defaultPlotSize[2], Qid = NA)
+  braidpptPlot(braid, plotcode,
+    filename = braidFilename(braid),
+    width = braid$defaultPlotSize[1],
+    height = braid$defaultPlotSize[2], Qid = NA)
 }
 \arguments{
   \item{plotcode}{A plot object (either ggplot or lattice)}

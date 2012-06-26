@@ -2,8 +2,8 @@
 \alias{pptNew}
 \title{Create new PowerPoint presentation and applies template.}
 \usage{
-  pptNew(template = "PentaLibra.potx", method =
-  "RDCOMClient")
+  pptNew(template = "PentaLibra.potx",
+    method = "RDCOMClient")
 }
 \arguments{
   \item{template}{Character string: File location and
@@ -23,7 +23,7 @@
 }
 \examples{
 if(isCOMsupported(method="RDCOMClient")){
-ppt <- pptNew()
+  ppt <- pptNew()
 }
 }
 \seealso{
