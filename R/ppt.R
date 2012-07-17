@@ -4,9 +4,9 @@
 #----------------------------------------------------------------------------------
 
 
-#' Tests whether R architecture is 32 bit Windows.
+#' Tests whether R architecture is 32-bit Windows.
 #' 
-#' rcom is only available on 32 but windows.
+#' rcom is only available on 32-bit windows.
 #' @return TRUE if architecture is \code{i386} else FALSE
 #' @param ppt A pointer to a ppt object
 #' @param method Character string indicating connection method to COM.  Currently supported options are "rcom" and "RDCOMClient"
@@ -37,19 +37,18 @@ stopIfNoCOM <- function(ppt, method=ppt$method){
 #' @keywords internal
 #' @export
 msTemplatePath <- function(file, path=NULL){
-  if(!file.exists(file)){
-    if(!is.null(path)) file <- file.path(path, file)
-    if(!file.exists(file)){
-      if(is.null(path)) file <- basename(file)
-      path <- path.expand("~/")
-      file <- file.path(path, "AppData", "Roaming", "Microsoft", "Templates", file)
-      if(!file.exists(file)){
-        message("Unable to locate template file")
-        file <- NULL
-      }
-    }
-  }
-  normalizePath(file)
+  if(file.exists(file)) return(normalizePath(file))
+
+  if(!is.null(path)) file <- file.path(path, file)
+  if(file.exists(file)) return(normalizePath(file))
+  
+  if(is.null(path)) file <- basename(file)
+  path <- path.expand("~/")
+  file <- file.path(path, "AppData", "Roaming", "Microsoft", "Templates", file)
+  if(file.exists(file)) normalizePath(file)
+  
+  message("Unable to locate template file")
+  return(NULL)
 }
 
 
@@ -80,6 +79,7 @@ tabIndentLevels <- function(text, sep="\r"){
 #'
 #' @param template Character string: File location and template name.  If not a full file path, searches for the file in the default path for Microsoft templates.  See \code{\link{msTemplatePath}} for details
 #' @inheritParams isCOMsupported
+#' @param ... passed to \code{\link[R2PPT]{PPT.Init}}
 #' @return A pointer to a ppt object
 #' @examples 
 #' if(isCOMsupported(method="RDCOMClient")){
@@ -87,11 +87,16 @@ tabIndentLevels <- function(text, sep="\r"){
 #' }
 #' @family PowerPoint
 #' @export
-pptNew <- function(template="PentaLibra.potx", method="RDCOMClient"){
-  template <- msTemplatePath(template)
+pptNew <- function(template=NULL, method=c("RDCOMClient", "rcom"), ...){
+  method <- match.arg(method)
+  switch(method,
+      RDCOMClient = stopifnot(require(RDCOMClient)),
+      com = stopifnot(require(rcom))
+  )
+  if(!is.null(template)) template <- msTemplatePath(template)
   stopIfNoCOM(method=method)
-  ppt <- PPT.Init(method=method) 
-  ppt <- PPT.ApplyTemplate(ppt, file=template)
+  ppt <- suppressWarnings(PPT.Init(method=method, ...)) 
+  if(!is.null(template)) ppt <- PPT.ApplyTemplate(ppt, file=template)
   return(invisible(ppt))
 }
 
@@ -103,7 +108,12 @@ pptNew <- function(template="PentaLibra.potx", method="RDCOMClient"){
 #' @return A pointer to a ppt object
 #' @family PowerPoint
 #' @export
-pptOpen <- function(file, method="RDCOMClient"){
+pptOpen <- function(file, method=c("RDCOMClient", "rcom")){
+  method <- match.arg(method)
+  switch(method,
+      RDCOMClient = stopifnot(require(RDCOMClient)),
+      com = stopifnot(require(rcom))
+  )
   if(!file.exists(file)) stop("In pptOpen file does not exist")
   ppt <- PPT.Open(file=file, method=method) 
   return(invisible(ppt))
@@ -220,7 +230,7 @@ pptNewSlide <- function(ppt, title=NULL, text=NULL, subtitle=NULL, file=NULL,
 #' The default position is in the middle of the slide, at the size of the original image.
 #' @param ppt A ppt object, see \code{\link{pptNew}}
 #' @param file Location and file name of a plot
-#' @param size A numeric vector of size 4, indicating c(x1, y1, x2, y2) expressed as percentage of page size 
+#' @param size A numeric vector of size 4, indicating c(x1, y1, x2, y2) expressed as percentage of page size
 #' @family PowerPoint
 ## #' @examples 
 ## #' if(isRcomSupported()){
@@ -243,17 +253,25 @@ pptInsertImage <- function (ppt, file = NULL, size=c(0.1, 0.1, 0.9, 0.9))
   }
   if (length(size) != 4) 
     stop("Graphic size to export to PowerPoint must be a vector of length 4")
-  if (!is.null(file[1])) {
-    file[1] <- PPT.getAbsolutePath(file[1])
-  }
-  if (!is.null(file[1]) && !file.exists(file[1])) 
-    stop(paste(file[1], "does not exist"))
-  if (!is.null(file[1]) && file.exists(file[1])) {
-    file <- gsub("/", "\\\\", as.character(file[1]))
+  
+  #imgFile <- file.path(path, basename(file[1]))
+  imgFile <- file[1]
+  if(is.null(imgFile)) return(invisible(ppt))
+
+  #browser()
+  imgFile <- path.expand(imgFile)
+  imgFile <- normalizePath(imgFile, mustWork=FALSE)
+  #imgFile <- gsub("/", "\\\\", as.character(imgFile))
+  #imgFile <- PPT.getAbsolutePath(imgFile)
+  if(!file.exists(imgFile)) stop(paste(imgFile, "does not exist"))
+  
+  if (file.exists(imgFile)) {
+    #imgFile <- gsub("/", "\\\\", as.character(imgFile))
+    #imgFile <- normalizePath(imgFile, mustWork=FALSE)
     shp <- ppt$Current.Slide[["Shapes"]]
     
     # Insert picture at arbitrary location
-    pct <- shp$AddPicture(file[1], msoFALSE, msoTRUE, 1, 1, 1, 1)
+    pct <- shp$AddPicture(imgFile, msoFALSE, msoTRUE, 1, 1, 1, 1)
     # Scale picture to 100% of its own relative size
     pct$ScaleHeight(1, msoTRUE)
     pct$ScaleWidth(1, msoTRUE)
