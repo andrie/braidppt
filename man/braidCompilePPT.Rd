@@ -2,7 +2,7 @@
 \alias{braidCompilePPT}
 \title{Compiles braid object to ppt.}
 \usage{
-  braidCompilePPT(b = NULL, fileOuter = b$fileInner, ...)
+  braidCompilePPT(b, fileOuter = b$fileInner, ...)
 }
 \arguments{
   \item{b}{A braid object}

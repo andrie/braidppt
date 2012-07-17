@@ -2,10 +2,13 @@
 \alias{braidpptSave}
 \title{Saves ppt.}
 \usage{
-  braidpptSave(braid, filename)
+  braidpptSave(braid, filename, path = braid$pathLatex)
 }
 \arguments{
-  \item{filename}{Character string: Name of file to save.}
+  \item{filename}{Character string: Name of PowerPoint file
+  to save.}
+
+  \item{path}{file path to filename}
 
   \item{braid}{Braid object}
 }

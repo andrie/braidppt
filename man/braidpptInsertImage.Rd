@@ -2,7 +2,7 @@
 \alias{braidpptInsertImage}
 \title{Inserts image on slide.}
 \usage{
-  braidpptInsertImage(braid, filename = NULL, size = NULL)
+  braidpptInsertImage(braid, filename, size = NULL)
 }
 \arguments{
   \item{braid}{Braid object}

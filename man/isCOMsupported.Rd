@@ -1,6 +1,6 @@
 \name{isCOMsupported}
 \alias{isCOMsupported}
-\title{Tests whether R architecture is 32 bit Windows.}
+\title{Tests whether R architecture is 32-bit Windows.}
 \usage{
   isCOMsupported(ppt = NULL, method = ppt$method)
 }
@@ -15,7 +15,7 @@
   TRUE if architecture is \code{i386} else FALSE
 }
 \description{
-  rcom is only available on 32 but windows.
+  rcom is only available on 32-bit windows.
 }
 \examples{
 isCOMsupported(method="rcom")

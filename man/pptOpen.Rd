@@ -2,7 +2,7 @@
 \alias{pptOpen}
 \title{Opens existing PowerPoint presentations.}
 \usage{
-  pptOpen(file, method = "RDCOMClient")
+  pptOpen(file, method = c("RDCOMClient", "rcom"))
 }
 \arguments{
   \item{file}{Character string: Name of a file}
