@@ -4,7 +4,7 @@
 #----------------------------------------------------------------------------------
 
 
-context("Code generation helper functions")
+context("Code generation")
 
 test_that(".q() quotes correctly", {
       

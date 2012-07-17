@@ -3,7 +3,7 @@
 # Author: Andrie
 #----------------------------------------------------------------------------------
 
-context("ppt helper functions")
+context("ppt")
 
 test_that("msTemplatePath returns correct file path",{
       
@@ -21,7 +21,7 @@ test_that("msTemplatePath returns correct file path",{
 
 
 
-context("Initialise ppt and add text slides")
+#context("Initialise ppt and add text slides")
 
 test_that("pptNew creates new ppt using rcom", {
       
@@ -40,14 +40,16 @@ test_that("pptNew creates new ppt using rcom", {
     })
 
 test_that("pptNew creates new ppt using RDCOMClient", {
+      if(require("RDCOMClient")){
       
-      ppt <- pptNew()
-      expect_is(ppt, "list")
-      expect_equal(ppt$method, "RDCOMClient")
-      expect_is(ppt$ppt, "COMIDispatch")
-      expect_is(ppt$pres, "COMIDispatch")
-      
-      ppt <- pptClose(ppt)
+        ppt <- pptNew()
+        expect_is(ppt, "list")
+        expect_equal(ppt$method, "RDCOMClient")
+        expect_is(ppt$ppt, "COMIDispatch")
+        expect_is(ppt$pres, "COMIDispatch")
+        
+        ppt <- pptClose(ppt)
+      }
       
 #      print(dput(ppt))
       
@@ -75,14 +77,16 @@ test_that("pptNewSlide adds slides", {
 test_that("pptInsertImage inserts image", {
       
       # Create plot file
-      png("sinewave.png")
+      
+      imgfile <- file.path(tempdir(), "sinewave.png") 
+      png(imgfile)
       plot(sin, -pi, 2*pi)
       dev.off()
       
       ppt <- pptNew()
       
       ppt <- pptNewSlide(ppt, "Slide with graphic", subtitle="Test of slide with graphic")
-      ppt <- pptInsertImage(ppt, file="sinewave.png")
+      ppt <- pptInsertImage(ppt, file=file.path(tempdir(), "sinewave.png"))
       
       expect_is(ppt, "list")
       expect_equal(ppt$method, "RDCOMClient")
@@ -90,15 +94,17 @@ test_that("pptInsertImage inserts image", {
       expect_is(ppt$pres, "COMIDispatch")
       
       pptClose(ppt)
+      file.remove(imgfile)
       
     })
 
 
-context("Save ppt")
+#context("Save ppt")
 
 test_that("ppt is created and saved",{
       
       testFile <- "testRppt.ppt"
+      on.exit(unlink(testFile))
       
       if(file.exists(testFile)) file.remove(testFile)
       
