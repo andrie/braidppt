@@ -43,9 +43,8 @@ msTemplatePath <- function(file, path=NULL){
   if(file.exists(file)) return(normalizePath(file))
   
   if(is.null(path)) file <- basename(file)
-  path <- path.expand("~/")
-  file <- file.path(path, "AppData", "Roaming", "Microsoft", "Templates", file)
-  if(file.exists(file)) normalizePath(file)
+  file <- file.path(Sys.getenv("HOMEPATH"), "AppData", "Roaming", "Microsoft", "Templates", file)
+  if(file.exists(file)) return(normalizePath(file))
   
   message("Unable to locate template file")
   return(NULL)
