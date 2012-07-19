@@ -27,12 +27,12 @@ This package depends on an interface to windows COM. You can do this using eithe
 
 I have found that RDCOMClient works on windows 64-bit. The package documentation is at:
 
-http://www.omegahat.org/RDCOMClient/
+`http://www.omegahat.org/RDCOMClient/`
 
 To install, use:
 
-install.packages("RDCOMClient", repos = "http://www.omegahat.org/R")
+`install.packages("RDCOMClient", repos = "http://www.omegahat.org/R")`
 
 You may have to install from source to get it to work:
 
-install.packages("RDCOMClient", repos = "http://www.omegahat.org/R", type="source")
+`install.packages("RDCOMClient", repos = "http://www.omegahat.org/R", type="source")`
