@@ -82,6 +82,7 @@ tabIndentLevels <- function(text, sep="\r"){
 #' @return A pointer to a ppt object
 #' @examples 
 #' if(isCOMsupported(method="RDCOMClient")){
+#'   library("RDCOMClient")
 #'   ppt <- pptNew()
 #' }
 #' @family PowerPoint

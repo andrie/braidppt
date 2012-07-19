@@ -25,6 +25,7 @@
 }
 \examples{
 if(isCOMsupported(method="RDCOMClient")){
+  library("RDCOMClient")
   ppt <- pptNew()
 }
 }
